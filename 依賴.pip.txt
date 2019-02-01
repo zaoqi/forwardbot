@@ -1,2 +1,2 @@
-wxpy
-aiocqhttp
+wxpy https://github.com/youfou/wxpy
+aiocqhttp https://github.com/richardchien/python-aiocqhttp

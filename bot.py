@@ -9,7 +9,7 @@ wxgroup = wxbot.groups().search(config['WxGroup'])[0]
 def wxbot_receive_raw(rawmsg):
 	print(rawmsg)
 	msg = {}
-	msg['sender'] = rawmsg.member
+	msg['sender'] = rawmsg.member.name
 	msg['text'] = rawmsg.text
 	receive_wx_text(msg)
 

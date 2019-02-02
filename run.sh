@@ -70,5 +70,13 @@ then
     must touch "$forwardbot_var_root/status/installed_python"
 fi
 
+must cd "$forwardbot_var_root/status"
+if [ ! -f installed_pip_packages ]
+then
+    must "$forwardbot_var_root/bin/pip3" install wxpy
+    must "$forwardbot_var_root/bin/pip3" install aiocqhttp
+    must touch "$forwardbot_var_root/status/installed_pip_packages"
+fi
+
 
 echo WIP

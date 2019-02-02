@@ -65,13 +65,15 @@ def bots_add_qq_cqhttp_groupId(
     def qqbot_sendmsg(message):
         asyncio.run(qqbot.send_group_msg(group_id=group_id, message=mssage))
     bots_add(set_qqbot_receiver, qqbot_sendmsg)
-    def run():
-        from hypercorn.asyncio import serve
-        from hypercorn.config import Config
-        config = Config()
-        config.bind = [host+":"+str(port)]
-        asyncio.run(serve(qqbot.asgi, config))
-    run() # 阻塞！
+    #非阻塞尝试失败
+    #def run():
+        #from hypercorn.asyncio import serve
+        #from hypercorn.config import Config
+        #config = Config()
+        #config.bind = [host+":"+str(port)]
+        #asyncio.run(serve(qqbot.asgi, config))
+    #run() # 阻塞！
+    qqbot.run(host=host, port=port)
 
 with open('conf.py', 'r', encoding='utf-8') as f:
     conf = f.read()

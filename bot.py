@@ -33,11 +33,11 @@ def bots_add_wechat_groupName(group_name):
     bots_add(set_wxbot_receiver, wxbot_sendmsg)
 
 def bots_add_qq_cqhttp_groupId(
-        api_root: Optional[str] = None,
-        access_token: Optional[str] = None,
-        secret: Optional[AnyStr] = None,
-        enable_http_post: bool = False,
-        message_class: type = None,
+        api_root = None,
+        access_token = None,
+        secret = None,
+        enable_http_post = False,
+        message_class = None,
         host = '127.0.0.1',
         port = None,
         group_id = None):

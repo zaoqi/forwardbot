@@ -14,7 +14,6 @@ forwardbot_var_root="$PWD"
 must mkdir -p bin
 must mkdir -p lib
 must mkdir -p status
-export PATH="$forwardbot_var_root/bin:$PATH:$forwardbot_var_root/bin"
 export LANG=zh_CN.UTF-8
 
 must cd "$forwardbot_var_root/status"
@@ -80,5 +79,21 @@ then
     must touch "$forwardbot_var_root/status/installed_pip_packages"
 fi
 
+keep_coolq(){
+    while true
+    do
+	if killall -0 CQA.exe
+	then
+	else
+	    rm -fr "$forwardbot_var_root/lib/coolq/data/app/io.github.richardchien.coolqhttpapi"
+	    must mkdir -p "$forwardbot_var_root/lib/coolq/data/app/io.github.richardchien.coolqhttpapi/config"
+	    must cp "$forwardbot_var_root/../coolq.httpapi.conf.json" "$forwardbot_var_root/lib/coolq/data/app/io.github.richardchien.coolqhttpapi/config/general.json"
+	    must cd "$forwardbot_var_root/lib/coolq"
+	    wine CQA.exe &
+	fi
+    done
+}
+keep_coolq &
 
-echo WIP
+must cd "$forwardbot_var_root/.."
+"$forwardbot_var_root/bin/python3" bot.py

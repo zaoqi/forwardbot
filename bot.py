@@ -61,8 +61,8 @@ def bots_add_qq_cqhttp_groupId(
             receive_qq_text(msg)
     def qqbot_sendmsg(message):
         asyncio.run(qqbot.send_group_msg(group_id=group_id, message=mssage))
-    qqbot.run(host=host, port=port)
     bots_add(set_qqbot_receiver, qqbot_sendmsg)
+    qqbot.run(host=host, port=port)
 
 with open('conf.py', 'r', encoding='utf-8') as f:
     conf = f.read()

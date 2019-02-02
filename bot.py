@@ -65,7 +65,7 @@ def bots_add_qq_cqhttp_groupId(
     bots_add(set_qqbot_receiver, qqbot_sendmsg)
     def run():
         qqbot.run(host=host, port=port)
-    t=threading.Thread(target=run, args=(,))
+    t=threading.Thread(target=run, args=())
     t.start()
 
 with open('conf.py', 'r', encoding='utf-8') as f:

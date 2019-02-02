@@ -1,0 +1,1 @@
+make libreadline-dev g++ zlib1g-dev libncursesw5-dev libbz2-dev liblzma-dev libgdbm-dev libdb-dev tk-dev blt-dev libssl-dev libexpat1-dev libmpdec-dev libmpdec-dev libffi-dev libgpm2

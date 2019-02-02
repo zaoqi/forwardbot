@@ -9,7 +9,9 @@ def bots_add(set_receive_callback, send_message):
     def on_receive(msg):
         for bot in bots:
             if bot != send_message:
-                bot('[{}]{}({})\n{}'.format(id, msg['sender'], msg['sender_id'], msg['message']))
+                msg = '[{}]{}({})\n{}'.format(id, msg['sender'], msg['sender_id'], msg['message'])
+                print(str(bot)+"('"+msg+"')");
+                bot(msg)
     set_receive_callback(on_receive)
     bots.append(send_message)
 

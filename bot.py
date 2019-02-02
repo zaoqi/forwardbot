@@ -69,7 +69,7 @@ def bots_add_qq_cqhttp_groupId(
         asyncio.set_event_loop(asyncio.new_event_loop())
         config = Config()
         config.bind = [host+":"+str(port)]
-        asyncio.run(serve(bot.asgi, config))
+        asyncio.run(serve(qqbot.asgi, config))
     t=threading.Thread(target=run, args=())
     t.start()
 

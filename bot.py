@@ -52,10 +52,10 @@ def bots_add_qq_cqhttp_groupId(
         qqbot_receiver = on_receive
     @qqbot.on_message()
     async def qq_handle_msg(context):
-	if context['post_type'] == 'message' and context['message_type'] == 'group' and context['group_id'] == group_id:
-	    print(context)
-	    msg = {}
-	    msg['sender'] = context['sender']['nickname']
+        if context['post_type'] == 'message' and context['message_type'] == 'group' and context['group_id'] == group_id:
+            print(context)
+            msg = {}
+            msg['sender'] = context['sender']['nickname']
             msg['sender_id'] = context['sender']['user_id']
             msg['message'] = context['message']
             receive_qq_text(msg)

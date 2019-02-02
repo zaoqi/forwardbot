@@ -84,7 +84,7 @@ keep_coolq(){
     do
 	if killall -0 CQA.exe
 	then
-	    echo
+	    sleep 5
 	else
 	    rm -fr "$forwardbot_var_root/lib/coolq/data/app/io.github.richardchien.coolqhttpapi"
 	    must mkdir -p "$forwardbot_var_root/lib/coolq/data/app/io.github.richardchien.coolqhttpapi/config"

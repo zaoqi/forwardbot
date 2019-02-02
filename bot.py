@@ -66,6 +66,6 @@ def bots_add_qq_cqhttp_groupId(
 
 with open('conf.py', 'r', encoding='utf-8') as f:
     conf = f.read()
-eval(conf)
+#WIP#eval(conf)
 
 wxpy.embed()

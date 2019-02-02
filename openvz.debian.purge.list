@@ -1,0 +1,8 @@
+fetchmail
+samba-*
+apache2*
+postfix
+sendmail-*
+xinetd
+rsyc
+quota

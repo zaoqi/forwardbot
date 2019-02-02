@@ -1,38 +1,71 @@
-config = {}
-config['WxGroup'] = 'The Language'
-config['QqGroupId'] = 949144378
-
 import wxpy
-wxbot = wxpy.Bot()
-wxgroup = wxbot.groups().search(config['WxGroup'])[0]
-@wxbot.register(wxgroup, wxpy.TEXT)
-def wxbot_receive_raw(rawmsg):
-	print(rawmsg)
-	msg = {}
-	msg['sender'] = rawmsg.member.name
-	msg['text'] = rawmsg.text
-	receive_wx_text(msg)
-
 from aiocqhttp import CQHttp
 import asyncio
 
-qqbot = CQHttp(access_token='',
-             enable_http_post=False)
+bots=[]
+def bots_add(set_receive_callback, send_message):
+    id=str(set_receive_callback)+str(send_message)
+    def on_receive(msg):
+        for bot in bots:
+            if bot != send_message:
+                bot('[{}]{}({})\n{}'.format(id, msg['sender'], msg['sender_id'], msg['message']))
+    set_receive_callback(on_receive)
+    bots.append(send_message)
 
-@qqbot.on_message()
-async def qq_handle_msg(context):
-	if context['post_type'] == 'message' and context['message_type'] == 'group' and context['group_id'] == config['QqGroupId']:
-		print(context)
-		msg = {}
-		msg['sender'] = context['sender']['nickname']
-		msg['text'] = context['message']
-		receive_qq_text(msg)
+def bots_add_wechat_groupName(group_name):
+    wxbot = wxpy.Bot()
+    wxbot.enable_puid()
+    wxgroup = wxbot.groups().search(group_name)[0]
+    wxbot_receiver = None
+    def set_wxbot_receiver(on_receive):
+        nonlocal wxbot_receiver
+        wxbot_receiver = on_receive
+    @wxbot.register(wxgroup, wxpy.TEXT)
+    def wxbot_receive_raw(rawmsg):
+	print(rawmsg)
+	msg = {}
+	msg['sender'] = rawmsg.member.name
+        msg['sender_id'] = rawmsg.member.puid
+        msg['message'] = rawmsg.text
+	wxbot_receiver(msg)
+    def wxbot_sendmsg(message):
+        wxgroup.send(message)
+    bots_add(set_wxbot_receiver, wxbot_sendmsg)
 
-def receive_wx_text(msg):
-	asyncio.run(qqbot.send_group_msg(group_id=config['QqGroupId'], message='【微信】{}|{}'.format(msg['sender'], msg['text'])))
+def bots_add_qq_cqhttp_groupId(
+        api_root: Optional[str] = None,
+        access_token: Optional[str] = None,
+        secret: Optional[AnyStr] = None,
+        enable_http_post: bool = False,
+        message_class: type = None,
+        host = '127.0.0.1',
+        port = None,
+        group_id = None):
+    qqbot = CQHttp(api_root=api_root,
+                   access_token=access_token,
+                   secret=secret,
+                   enable_http_post=enable_http_post,
+                   message_class=message_class)
+    qqbot_receiver = None
+    def set_qqbot_receiver(on_receive):
+        nonlocal qqbot_receiver
+        qqbot_receiver = on_receive
+    @qqbot.on_message()
+    async def qq_handle_msg(context):
+	if context['post_type'] == 'message' and context['message_type'] == 'group' and context['group_id'] == group_id:
+	    print(context)
+	    msg = {}
+	    msg['sender'] = context['sender']['nickname']
+            msg['sender_id'] = context['sender']['user_id']
+            msg['message'] = context['message']
+            receive_qq_text(msg)
+    def qqbot_sendmsg(message):
+        asyncio.run(qqbot.send_group_msg(group_id=group_id, message=mssage))
+    qqbot.run(host=host, port=port)
+    bots_add(set_qqbot_receiver, qqbot_sendmsg)
 
-def receive_qq_text(msg):
-	wxgroup.send('【QQ】{}|{}'.format(msg['sender'], msg['text']))
+with open('conf.py', 'r', encoding='utf-8') as f:
+    conf = f.read()
+eval(conf)
 
-qqbot.run(host='127.0.0.1', port=8194)
-wxbot.join()
+wxpy.embed()

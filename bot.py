@@ -64,8 +64,12 @@ def bots_add_qq_cqhttp_groupId(
         asyncio.run(qqbot.send_group_msg(group_id=group_id, message=mssage))
     bots_add(set_qqbot_receiver, qqbot_sendmsg)
     def run():
+        from hypercorn.asyncio import serve
+        from hypercorn.config import Config
         asyncio.set_event_loop(asyncio.new_event_loop())
-        qqbot.run(host=host, port=port)
+        config = Config()
+        config.bind = [host+":"+str(port)]
+        asyncio.run(serve(bot.asgi, config))
     t=threading.Thread(target=run, args=())
     t.start()
 

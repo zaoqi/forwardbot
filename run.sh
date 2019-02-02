@@ -3,10 +3,12 @@
 must(){
     until "$@"
     do
-        echo
+        echo "sleep 1s/retry..."
+	sleep 1
     done
 }
 
+must mkdir -p var
 must cd var
 forwardbot_var_root="$PWD"
 must mkdir -p bin

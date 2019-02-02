@@ -1,6 +1,7 @@
 import wxpy
 from aiocqhttp import CQHttp
 import asyncio
+import thread
 
 bots=[]
 def bots_add(set_receive_callback, send_message):
@@ -62,7 +63,9 @@ def bots_add_qq_cqhttp_groupId(
     def qqbot_sendmsg(message):
         asyncio.run(qqbot.send_group_msg(group_id=group_id, message=mssage))
     bots_add(set_qqbot_receiver, qqbot_sendmsg)
-    qqbot.run(host=host, port=port)
+    def run():
+        qqbot.run(host=host, port=port)
+    thread.start_new_thread(run, ())
 
 with open('conf.py', 'r', encoding='utf-8') as f:
     conf = f.read()

@@ -22,12 +22,12 @@ def bots_add_wechat_groupName(group_name):
         wxbot_receiver = on_receive
     @wxbot.register(wxgroup, wxpy.TEXT)
     def wxbot_receive_raw(rawmsg):
-	print(rawmsg)
-	msg = {}
-	msg['sender'] = rawmsg.member.name
+        print(rawmsg)
+        msg = {}
+        msg['sender'] = rawmsg.member.name
         msg['sender_id'] = rawmsg.member.puid
         msg['message'] = rawmsg.text
-	wxbot_receiver(msg)
+        wxbot_receiver(msg)
     def wxbot_sendmsg(message):
         wxgroup.send(message)
     bots_add(set_wxbot_receiver, wxbot_sendmsg)

@@ -59,7 +59,7 @@ def bots_add_qq_cqhttp_groupId(
             msg['sender'] = context['sender']['nickname']
             msg['sender_id'] = context['sender']['user_id']
             msg['message'] = context['message']
-            receive_qq_text(msg)
+            qqbot_receiver(msg)
     def qqbot_sendmsg(message):
         asyncio.run(qqbot.send_group_msg(group_id=group_id, message=mssage))
     bots_add(set_qqbot_receiver, qqbot_sendmsg)

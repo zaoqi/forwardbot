@@ -90,7 +90,7 @@ keep_coolq(){
 	    must mkdir -p "$forwardbot_var_root/lib/coolq/data/app/io.github.richardchien.coolqhttpapi/config"
 	    must cp "$forwardbot_var_root/../coolq.httpapi.conf.json" "$forwardbot_var_root/lib/coolq/data/app/io.github.richardchien.coolqhttpapi/config/general.json"
 	    must cd "$forwardbot_var_root/lib/coolq"
-	    wine CQA.exe &
+	    wine CQA.exe >/dev/null 2>/dev/null &
 	    until killall -0 CQA.exe
 	    do
 		sleep 1
